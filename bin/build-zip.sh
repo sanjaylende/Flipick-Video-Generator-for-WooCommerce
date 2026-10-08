@@ -4,5 +4,5 @@ set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 rm -rf dist && mkdir -p dist/flipick-video-generator
 tar cf - --exclude=dist --exclude=.git --exclude=bin --exclude=.gitignore --exclude=.gitattributes . | (cd dist/flipick-video-generator && tar xf -)
-(cd dist && zip -qr flipick-video-generator.zip flipick-video-generator && rm -rf flipick-video-generator)
+(cd dist && { command -v zip >/dev/null && zip -qr flipick-video-generator.zip flipick-video-generator || tar -a -cf flipick-video-generator.zip flipick-video-generator; } && rm -rf flipick-video-generator)
 echo "Built dist/flipick-video-generator.zip"
